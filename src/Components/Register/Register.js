@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
 
 
@@ -8,18 +8,21 @@ import { AuthContext } from "../../Context/AuthProvider";
 const Register = () => {
     const { register, handleSubmit, formState: { errors }, } = useForm();
     const imageHostKey = process.env.REACT_APP_imgbb_Key
-    const [image, setImage] = useState(null);
-    const [imageUrl, setImageUrl] = useState(null);
+    
     const { createUser, updateNamePhoto } = useContext(AuthContext)
+    const location = useLocation()
+    const navigate = useNavigate()
+    const from = location.state?.from?.pathname || '/'
 
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        setImage(file);
-    };
+    // const handleImageChange = (e) => {
+    //     const file = e.target.files[0];
+    //     setImage(file);
+    // };
 
     const onSubmit = (data) => {
         //upload img to imgbb
         const formData = new FormData();
+        const image = data.image[0]
         formData.append("image", image);
         const url = `https://api.imgbb.com/1/upload?expiration=600&key=${imageHostKey}`
 
@@ -31,46 +34,52 @@ const Register = () => {
             .then(imgData => {
                 console.log(imgData);
                 if (imgData.success) {
-                    setImageUrl(imgData.data.url)
-                    console.log(imageUrl, );
-                     //sign up
-                    createUser(data.email, data.password)
-                        .then(res => {
-                            console.log(res.user);
+                    const imageUrl = imgData.data.url
+                    console.log(imageUrl);
+                    //sign up
+                    if (imageUrl) {
+                        createUser(data.email, data.password)
+                            .then(res => {
+                                console.log(res.user);
 
-                            updateNamePhoto(data.name, imageUrl)
-                                .then(res => {
-                                    console.log('display uppdates')
-                                    const user = {
-                                        name:data.name,
-                                        email:data.email,
-                                        photoURL: imageUrl
-                                    }
+                                updateNamePhoto(data.name, imgData.data.url)
+                                    .then(res => {
+                                        console.log('display uppdates')
+                                        const user = {
+                                            name: data.name,
+                                            email: data.email,
+                                            photoURL: imageUrl
+                                        }
 
-                                    fetch('http://localhost:5000/users',{
-                                        method:'POST',
-                                        headers: {
-                                            'content-type': 'application/json'
-                                        },
-                                        body: JSON.stringify(user)
+                                        fetch('http://localhost:5000/users', {
+                                            method: 'POST',
+                                            headers: {
+                                                'content-type': 'application/json'
+                                            },
+                                            body: JSON.stringify(user)
+                                        })
+                                            .then(res => res.json())
+                                            .then(data => {
+                                                console.log(data)
+                                                navigate(from, { replace: true })
+                                                // Swal.fire(
+                                                //     'Good job!',
+                                                //     'successfully signed up!',
+                                                //     'success'
+                                                //   )
+                                            })
                                     })
-                                    .then(res => res.json())
-                                    .then(data => {
-                                        console.log(data)
-                                        // Swal.fire(
-                                        //     'Good job!',
-                                        //     'successfully signed up!',
-                                        //     'success'
-                                        //   )
-                                    })
-                                })
-                                .catch(err => console.log(err))
-                        })
-                        .catch(err => console.log(err))
+                                    .catch(err => console.log(err))
+
+                            })
+                            .catch(err => console.log(err))
+                    } else {
+                        return;
+                    }
                 }
             })
 
-       
+
 
 
 
@@ -79,7 +88,7 @@ const Register = () => {
     return (
         <div className="flex flex-col items-center justify-center my-24">
             <form
-                className="flex flex-col bg-gray-100 p-6 rounded-lg shadow-md"
+                className="flex flex-col bg-base-400 p-6 rounded-lg shadow-2xl"
                 onSubmit={handleSubmit(onSubmit)}
             >
                 <h2 className="text-2xl font-bold mb-4">Register</h2>
@@ -127,7 +136,11 @@ const Register = () => {
                 <input
                     type="file"
                     id="image"
-                    onChange={handleImageChange}
+                    {...register("image", {
+                        required: "image is required",
+                        
+                    })}
+                    // onChange={handleImageChange}
                     className={`border border-gray-400 p-2 rounded-md mb-4 ${errors.image ? "border-red-500" : ""
                         }`}
                 />

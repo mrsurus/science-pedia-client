@@ -21,7 +21,8 @@ const ChatGPT = () => {
   }
 
   return (
-    <div className='w-5/6 mx-auto text-center my-16'>
+    <div className='w-5/6 mx-auto text-center mb-16'>
+      <p className='my-7 text-2xl font-semibold'>Ask any question of your curious mind to ChatGPT</p>
       <form action="" onSubmit={handleSubmit}>
         <input
         className='border border-gray-400 p-2 rounded-md mb-4'
@@ -38,7 +39,7 @@ const ChatGPT = () => {
       {
       response.length !==0 && <button onClick={handleClear} className=' absolute right-2 -top-10  btn-sm btn border-none bg-red-500'>Clear</button>
       }
-        <p>{response}</p>
+        <p className='border rounded p-5'>{response}</p>
       </div>
     </div>
   );

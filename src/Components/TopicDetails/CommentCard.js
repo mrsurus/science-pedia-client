@@ -1,7 +1,7 @@
 import React from 'react';
 
-const CommentCard = ({comments}) => {
-    const {name, comment, photo} = comments
+const CommentCard = ({data}) => {
+    const {name, comment, photo} = data
     return (
         <div className="p-4 flex space-x-4">
             <div className='avater'>

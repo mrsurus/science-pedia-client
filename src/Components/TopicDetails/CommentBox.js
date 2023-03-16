@@ -4,11 +4,10 @@ import { Button, Input } from 'daisyui';
 import { AuthContext } from '../../Context/AuthProvider';
 import { Link } from 'react-router-dom';
 
-const CommentBox = ({tdata}) => {
+const CommentBox = ({tdata, setCrefetch}) => {
     const { user } = useContext(AuthContext)
     const { register, handleSubmit, formState, reset } = useForm();
     const { isSubmitting } = formState;
-    console.log(user);
     const onSubmit = (data) => {
         const commentInfo = {
             topicName: tdata.name,
@@ -31,6 +30,7 @@ const CommentBox = ({tdata}) => {
             console.log(data)
             if(data.acknowledged){
                 reset()
+                setCrefetch(true)
             }
         })
     };
@@ -42,8 +42,8 @@ const CommentBox = ({tdata}) => {
     }
 
     return (
-        <div>
-            <p className='text-2xl text-center'>Write your valuable openion in the comment box.</p>
+        <div className='bg-gray-900 py-5 my-3d'>
+            <p className='text-2xl text-center text-white'>Write your valuable openion in the comment box.</p>
             <form className='w-96 mx-auto bg-violet-400 p-7 rounded my-5 text-center' onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-4">
                     <label htmlFor="">Your Name</label><br />

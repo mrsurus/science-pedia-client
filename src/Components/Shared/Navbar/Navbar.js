@@ -18,7 +18,7 @@ const Navbar = () => {
                     <div className="md:flex md:items-center md:gap-12">
                         <a className="ml-8 block text-white" href="/">
                             <span className="sr-only">Home</span>
-                            <p > <GiFoodTruck className="h-9 w-9 text-lime-300"></GiFoodTruck> </p>
+                            <p className="text-2xl font-bold text-lime-400">ScienceP. </p>
                             
                         </a>
                     </div>
@@ -30,12 +30,13 @@ const Navbar = () => {
                                 <li><Link to='/' className="text-base-300 font-semibold font-3xl transition hover:text-500/75" >Home</Link></li>
                                 {user?.uid &&
                                     <>
-                                        <li><Link to='/myreview' className="text-base-300 font-semibold font-3xl transition hover:text-500/75" >My Review</Link></li>
-                                        <li><Link to='/addservice' className="text-base-300 font-semibold font-3xl transition hover:text-gray-500/75" >Add Service</Link></li>
+                                        <li><Link to='/mycomment' className="text-base-300 font-semibold font-3xl transition hover:text-500/75" >My Comments</Link></li>
+                                        <li><Link to='/quesans' className="text-base-300 font-semibold font-3xl transition hover:text-gray-500/75" >Q/A</Link></li>
                                     </>
                                 }
                                 <li><Link to='/blog' className="text-base-300 font-semibold font-3xl transition hover:text-gray-500/75" >Blog</Link></li>
-
+                                <li><Link to='/about' className="text-base-300 font-semibold font-3xl transition hover:text-gray-500/75" >About Us</Link></li>
+                                
                             </ul>
                         </nav>
                     </div>
@@ -70,11 +71,12 @@ const Navbar = () => {
                                     <Link to='/' className="text-gray-700 block px-4 py-2 text-sm" >Home</Link>
                                     {user?.uid? 
                                         <>
-                                            <Link to='/myreview' className="text-gray-700 block px-4 py-2 text-sm" >My Review</Link>
-                                            <Link to='/addservice' className="text-gray-700 block px-4 py-2 text-sm" >Add Service</Link>
+                                            <Link to='/mycomment' className="text-gray-700 block px-4 py-2 text-md" >My Comments</Link>
+                                            <Link to='/quesans' className="text-gray-700 block px-4 py-2 text-md" >Q/A</Link>
                                         </> :
-                                        <Link to='/signup' className="text-gray-700 block px-4 py-2 text-sm">Register</Link>}
-                                    <Link to='/blog' className="text-gray-700 block px-4 py-2 text-sm" >Blog</Link>
+                                        <Link to='/signup' className="text-gray-700 block px-4 py-2 text-md">Register</Link>}
+                                    <Link to='/blog' className="text-gray-700 block px-4 py-2 text-md" >Blog</Link>
+                                    <Link to='/about' className="text-gray-700 block px-4 py-2 text-md" >About Us</Link>
                                 </div>
                             </div>
 

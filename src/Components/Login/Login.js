@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaGoogle } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -6,6 +6,7 @@ import { AuthContext } from "../../Context/AuthProvider";
 
 const Login = () => {
     const { logIn, googleLogin } = useContext(AuthContext)
+    const [loginError, setLoginError] = useState('')
     const location = useLocation()
     const navigate = useNavigate()
     const from = location.state?.from?.pathname || '/'
@@ -23,8 +24,9 @@ const Login = () => {
                 console.log(user);
                 navigate(from, { replace: true })
                 reset()
+                setLoginError('')
             })
-            .catch(err => console.log(err))
+            .catch(err => setLoginError(err.message.slice(22,36)))
     };
 
     const handleGoogleLogin = () => {
@@ -39,8 +41,12 @@ const Login = () => {
     }
 
     return (
-        <div className="flex flex-col my-24 items-center justify-center ">
-            <div className="bg-gray-100 p-6 rounded-lg shadow-md">
+        <div className="md:flex "> 
+            <div className="w-1/2 mx-auto">
+                <img className="w-full " src="https://media.istockphoto.com/id/1281150061/vector/register-account-submit-access-login-password-username-internet-online-website-concept.jpg?s=612x612&w=0&k=20&c=9HWSuA9IaU4o-CK6fALBS5eaO1ubnsM08EOYwgbwGBo=" alt="" />
+            </div>
+            <div className="flex flex-col w-1/2 mx-auto my-24 items-center justify-center ">
+            <div className="bg-gray-200 p-6 rounded-lg shadow-md">
                 <form
                     className="flex flex-col  "
                     onSubmit={handleSubmit(onSubmit)}
@@ -90,6 +96,7 @@ const Login = () => {
                     >
                         Login
                     </button>
+                    {loginError && <p className="text-red-500">Error: {loginError}</p>}
                     <div className="divider">OR</div>
 
                 </form>
@@ -102,6 +109,7 @@ const Login = () => {
                 </button>
             </div>
 
+        </div>
         </div>
     );
 };
