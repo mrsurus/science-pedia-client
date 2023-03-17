@@ -1,24 +1,26 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import {  useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { AuthContext } from "../../Context/AuthProvider";
+import useToken from "../../Hooks/useToken";
 
 
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors }, } = useForm();
     const imageHostKey = process.env.REACT_APP_imgbb_Key
-    
+    const [createEmail, setCreateEmail] = useState('')
+    const [token] = useToken(createEmail)
     const { createUser, updateNamePhoto } = useContext(AuthContext)
     const location = useLocation()
     const navigate = useNavigate()
     const from = location.state?.from?.pathname || '/'
 
-    // const handleImageChange = (e) => {
-    //     const file = e.target.files[0];
-    //     setImage(file);
-    // };
-
+    if(token){
+        navigate(from, { replace: true })
+    }
+    
     const onSubmit = (data) => {
         //upload img to imgbb
         const formData = new FormData();
@@ -26,6 +28,7 @@ const Register = () => {
         formData.append("image", image);
         const url = `https://api.imgbb.com/1/upload?expiration=600&key=${imageHostKey}`
 
+        const email = data.email
         fetch(url, {
             method: 'POST',
             body: formData
@@ -61,12 +64,13 @@ const Register = () => {
                                             .then(res => res.json())
                                             .then(data => {
                                                 console.log(data)
-                                                navigate(from, { replace: true })
-                                                // Swal.fire(
-                                                //     'Good job!',
-                                                //     'successfully signed up!',
-                                                //     'success'
-                                                //   )
+                                                setCreateEmail(email)
+                                                
+                                                Swal.fire(
+                                                    'Good job!',
+                                                    'successfully signed up!',
+                                                    'success'
+                                                  )
                                             })
                                     })
                                     .catch(err => console.log(err))
@@ -78,12 +82,8 @@ const Register = () => {
                     }
                 }
             })
-
-
-
-
-
     };
+
 
     return (
         <div className="flex flex-col items-center justify-center my-24">
@@ -138,7 +138,7 @@ const Register = () => {
                     id="image"
                     {...register("image", {
                         required: "image is required",
-                        
+
                     })}
                     // onChange={handleImageChange}
                     className={`border border-gray-400 p-2 rounded-md mb-4 ${errors.image ? "border-red-500" : ""

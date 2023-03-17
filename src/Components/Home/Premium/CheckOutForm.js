@@ -1,5 +1,6 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useContext, useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
 import {AuthContext} from '../../../Context/AuthProvider'
 
 const CheckOutForm = ({data}) => {
@@ -93,6 +94,11 @@ const CheckOutForm = ({data}) => {
                 if(data.insertedId){
                     setSuccess('Congrats! Your payment complete')
                     setTransactionId(paymentIntent.id)
+                    Swal.fire(
+                        'Good job!',
+                        'Payment Successful!',
+                        'success'
+                      )
                 }
             })
             

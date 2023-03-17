@@ -5,7 +5,7 @@ import ShowQAsec from './ShowQA/ShowQAsec';
 
 const QuestionAnswer = () => {
     return (
-        <div className=''>
+        <div className=' '>
             <PostQuestion></PostQuestion>
             <ShowQAsec ></ShowQAsec>
         </div>

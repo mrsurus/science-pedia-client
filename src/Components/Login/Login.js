@@ -2,7 +2,9 @@ import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaGoogle } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { AuthContext } from "../../Context/AuthProvider";
+import useToken from "../../Hooks/useToken";
 
 const Login = () => {
     const { logIn, googleLogin } = useContext(AuthContext)
@@ -10,7 +12,12 @@ const Login = () => {
     const location = useLocation()
     const navigate = useNavigate()
     const from = location.state?.from?.pathname || '/'
+    const [createEmail, setCreateEmail] = useState('')
+    const [token] = useToken(createEmail)
 
+    if(token){
+        navigate(from, { replace: true })
+    }
     const {
         register, reset,
         handleSubmit,
@@ -22,9 +29,14 @@ const Login = () => {
             .then(res => {
                 const user = res.user
                 console.log(user);
-                navigate(from, { replace: true })
+                setCreateEmail(data.email)
                 reset()
                 setLoginError('')
+                Swal.fire(
+                    'Good job!',
+                    'successfully log in!',
+                    'success'
+                  )
             })
             .catch(err => setLoginError(err.message.slice(22,36)))
     };
@@ -34,7 +46,7 @@ const Login = () => {
             .then(res => {
                 const user = res.user
                 console.log(user);
-                navigate(from, { replace: true })
+                setCreateEmail(user.email)
                 reset()
             })
             .catch(err => console.log(err))

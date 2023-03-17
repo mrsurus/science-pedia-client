@@ -1,11 +1,13 @@
 import { async } from '@firebase/util';
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../../Context/AuthProvider';
 import CommentCard from './CommentCard';
 
 
 const Comments = ({ tdata, crefetch}) => {
     const {name} = tdata
+    const {handleRefetch} = useContext(AuthContext)
 
     const {data: comments=[], refetch} = useQuery({
         queryKey:['comments'],
@@ -16,14 +18,14 @@ const Comments = ({ tdata, crefetch}) => {
         }
         
     })
-    if(crefetch && !crefetch){
+    if(handleRefetch || !handleRefetch){
         refetch()
     }
     if(comments.length === 0){
         return <p className='my-12 text-2xl text-center'>No Comments were added</p>
     }
     return (
-        <div>
+        <div className='my-10 w-4/5 mx-auto'>
             {
                 comments?.map(comment => 
                 <CommentCard 

@@ -3,9 +3,10 @@ import { useForm } from 'react-hook-form';
 import { Button, Input } from 'daisyui';
 import { AuthContext } from '../../Context/AuthProvider';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
-const CommentBox = ({tdata, setCrefetch}) => {
-    const { user } = useContext(AuthContext)
+const CommentBox = ({tdata}) => {
+    const { user,handleRefetch, setHandleRefetch } = useContext(AuthContext)
     const { register, handleSubmit, formState, reset } = useForm();
     const { isSubmitting } = formState;
     const onSubmit = (data) => {
@@ -30,7 +31,12 @@ const CommentBox = ({tdata, setCrefetch}) => {
             console.log(data)
             if(data.acknowledged){
                 reset()
-                setCrefetch(true)
+                setHandleRefetch(!handleRefetch)
+                Swal.fire(
+                    'Good job!',
+                    'Comment succesful!',
+                    'success'
+                  )
             }
         })
     };

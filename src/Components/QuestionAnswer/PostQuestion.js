@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import Swal from 'sweetalert2';
 import { AuthContext } from '../../Context/AuthProvider';
 
 const PostQuestion = () => {
@@ -25,17 +26,22 @@ const PostQuestion = () => {
         })
         .then(res => res.json())
         .then(data => {
-            form.reset()
             setHandleRefetch(!handleRefetch)
+            form.reset()
+            Swal.fire(
+                'Good job!',
+                'You post a comment!',
+                'success'
+              )
         })
     }
 
     return (
-        <div className="fixed bottom-0 w-full bg-blue-300 border-t border-gray-200 my-5 py-4">
+        <div className="fixed bottom-0 w-2/3  rounded-md  bg-blue-300 border-t border-gray-200 my-5 py-4">
             <p className='text-center text-2xl font-semibold mb-3'>Ask any question about science.</p>
-            <div className="max-w-4xl mx-auto px-4">
+            <div className="max-w-4xl  mx-auto px-4">
                 <form onSubmit={handleSubmit}>
-                    <div className="flex items-center border rounded-full px-4 py-2">
+                    <div className="flex items-center bg-base-200 border rounded-full px-4 py-2">
                         <input type="text" name='question' className="flex-1 w-full  focus:outline-none" placeholder="Freely ask your Question..." />
                         <button type="submit" className="ml-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full">Send</button>
                     </div>

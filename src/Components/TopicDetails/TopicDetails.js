@@ -6,7 +6,6 @@ import Details from './Details';
 
 const TopicDetails = () => {
     const data = useLoaderData()
-    const [crefetch, setCrefetch] = useState(false)
 
    
     return (
@@ -14,10 +13,8 @@ const TopicDetails = () => {
             <Details data={data}></Details>
             <Comments 
                 tdata={data}
-                crefetch={crefetch}
             ></Comments>
             <CommentBox
-                setCrefetch={setCrefetch}
                 tdata={data}
                 >
             </CommentBox>

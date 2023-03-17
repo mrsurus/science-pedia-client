@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AiFillDelete } from 'react-icons/ai';
+import Swal from 'sweetalert2';
 import { AuthContext } from '../../../Context/AuthProvider';
 
 const AnswerCard = ({ data }) => {
@@ -14,17 +15,21 @@ const AnswerCard = ({ data }) => {
             .then(data => {
                 console.log(data);
                 setHandleRefetch(!handleRefetch)
+                Swal.fire(
+                    'Delete succesful!',
+                    'success'
+                  )
             })
     }
     
     return (
         <div>
-            <div className="p-4 border my-3 rounded flex space-x-4 ">
+            <div className="p-4 my-3 rounded border flex space-x-4 ">
                 <div className='avater'>
                     <img className=' rounded-full w-8 h-8' src={img} alt={`${name}`} />
                 </div>
                 <div className="flex-1">
-                    <div className=" font-medium text-sm">{name}</div>
+                    <div className=" font-medium text-xs">{name}</div>
                     <div className="text-gray-500 ">{answer}</div>
                     {
                             user?.email === email && <button 

@@ -1,6 +1,7 @@
 
 import React, { useContext, useEffect, useState } from 'react';
 import { AiFillDelete } from 'react-icons/ai';
+import Swal from 'sweetalert2';
 import { AuthContext } from '../../../Context/AuthProvider';
 import AnswerCard from './AnswerCard';
 
@@ -41,6 +42,10 @@ const ShowQACard = ({ data }) => {
             .then(data => {
                 form.reset()
                 setHandleRefetch(!handleRefetch)
+                Swal.fire(
+                    'Your answer Posted!',
+                    'success'
+                  )
 
             })
     }
@@ -53,28 +58,32 @@ const ShowQACard = ({ data }) => {
             .then(data => {
                 console.log(data);
                 setHandleRefetch(!handleRefetch)
+                Swal.fire(
+                    'Delete succesful!',
+                    'success'
+                  )
             })
     }
     return (
-        <div className='my-5'>
-            <div className='inline md:flex border my-3 rounded md:justify-between'>
+        <div className='my-16  '>
+            <div className='inline md:flex  my-3 rounded md:justify-between'>
                 <div className="p-4 flex space-x-4">
                     <div className='avater'>
                         <img className=' rounded-full w-8 h-8' src={img} alt={`${name}`} />
                     </div>
                     <div className="flex-1">
                         <div className=" font-medium text-blue-600 text-sm">{name}</div>
-                        <div className=" text-3xl font-semibold">{question}</div>
+                        <div className=" text-2xl font-semibold">{question}</div>
                         {
                             user?.email === email && <button className='mt-3 btn btn-sm btn-outline text-red-500' onClick={handleDelete}><AiFillDelete></AiFillDelete></button>
                         }
                     </div>
 
                 </div>
-                <div className=" right-10  w-96  m-3">
-                    <div className="w-96">
+                <div className=" right-10  md:w-96  m-3">
+                    <div className="w-full">
                         <form onSubmit={handleSubmit}>
-                            <div className="flex items-center border rounded-full px-4 ">
+                            <div className="flex items-center  shadow-2xl border rounded-full px-4 ">
                                 <input type="text" name='answer' className="flex-1 w-full  focus:outline-none" placeholder="Write an answer..." />
                                 <button type="submit" className="ml-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full">Submit</button>
                             </div>
@@ -82,7 +91,7 @@ const ShowQACard = ({ data }) => {
                     </div>
                 </div>
             </div>
-            <div className='w-4/6 mx-auto '>
+            <div className='w-full md:w-4/6 mx-auto '>
                 {answers.length=== 0 && <p className='my-5 text-center'>No answer for this question yet</p>}
                 {answers.length !== 0 &&
                     answers?.map(answer =>

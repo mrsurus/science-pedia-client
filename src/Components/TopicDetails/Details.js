@@ -28,11 +28,12 @@ const Details = ({ data }) => {
             </div>
             <div className=' justify-around flex mt-16'>
                     <p 
+                
                     // onClick={()=> dispatch(incLikes())}
                     onClick={handleClicked}
                     onAnimationEnd={()=>dispatch(dicLikes())}
-                    className='mr-24 flex items-center border bg-white p-2 rounded-md'>{myState}likes<AiFillLike className='ml-1 text-xl'></AiFillLike><span></span></p>
-                    <p className='ml-24 flex items-center bg-white p-2 rounded-md'>Comments<AiFillWechat className='ml-1 text-xl'></AiFillWechat></p>
+                    className='mr-24 mb-5 flex items-center border bg-white p-2 rounded-md'>{myState}likes<AiFillLike className='ml-1 text-xl'></AiFillLike><span></span></p>
+                    <p className='ml-24 mb-5 flex items-center bg-white p-2 rounded-md'>Comments<AiFillWechat className='ml-1 text-xl'></AiFillWechat></p>
                 </div>
         </div>
     );

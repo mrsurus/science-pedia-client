@@ -21,7 +21,7 @@ const ChatGPT = () => {
   }
 
   return (
-    <div className='w-5/6 mx-auto text-center mb-16'>
+    <div className='w-5/6 mx-auto shadow-2xl text-center mb-16'>
       <p className='my-7 text-2xl font-semibold'>Ask any question of your curious mind to ChatGPT</p>
       <form action="" onSubmit={handleSubmit}>
         <input

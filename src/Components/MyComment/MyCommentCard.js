@@ -1,5 +1,6 @@
 import React from 'react';
 import {AiFillDelete} from 'react-icons/ai'
+import Swal from 'sweetalert2';
 const MyCommentCard = ({mycomment,refetch}) => {
     const {topicName, comment, date,_id} = mycomment
 
@@ -10,6 +11,10 @@ const MyCommentCard = ({mycomment,refetch}) => {
         .then(res => res.json())
         .then(data => {
             console.log(data);
+            Swal.fire(
+                'Succesfully Deleted!',
+                'success'
+              )
             refetch()
         })
     }

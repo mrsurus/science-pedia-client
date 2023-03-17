@@ -19,7 +19,7 @@ const Premium = () => {
     return (
         <div className='bg-gray-900 my-5 p-10'>
             <p className='text-2xl font-bold text-center my-5 text-white'>Be Our Premium User</p>
-            <div className=' grid grid-cols-3 gap-6'>
+            <div className=' grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
                 {
                     premiums?.map(premium =>
                         <PremiumCard
