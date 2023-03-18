@@ -7,7 +7,7 @@ const Topics = () => {
     const { data:topics=[] } = useQuery({
         queryKey: ['topic'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/topic')
+            const res = await fetch('https://science-pedia-server.vercel.app/topic')
             const data = await res.json()
             return data
         }

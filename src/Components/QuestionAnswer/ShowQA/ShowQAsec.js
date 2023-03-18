@@ -8,7 +8,7 @@ const ShowQAsec = () => {
     const {handleRefetch} = useContext(AuthContext)
 
     useEffect(() => {
-        fetch(`http://localhost:5000/questions`)
+        fetch(`https://science-pedia-server.vercel.app/questions`)
             .then(res => res.json())
             .then(data => setQuestions(data))
     }, [handleRefetch])

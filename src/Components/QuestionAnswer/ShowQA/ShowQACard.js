@@ -13,7 +13,7 @@ const ShowQACard = ({ data }) => {
 
 
     useEffect(() => {
-        fetch(`http://localhost:5000/answers/${_id}`)
+        fetch(`https://science-pedia-server.vercel.app/answers/${_id}`)
             .then(res => res.json())
             .then(data => setAnswers(data))
     }, [_id, handleRefetch])
@@ -31,7 +31,7 @@ const ShowQACard = ({ data }) => {
             img: user?.photoURL
         }
 
-        fetch('http://localhost:5000/answers', {
+        fetch('https://science-pedia-server.vercel.app/answers', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
@@ -51,7 +51,7 @@ const ShowQACard = ({ data }) => {
     }
 
     const handleDelete = () => {
-        fetch(`http://localhost:5000/questions/${_id}`, {
+        fetch(`https://science-pedia-server.vercel.app/questions/${_id}`, {
             method: "DELETE"
         })
             .then(res => res.json())

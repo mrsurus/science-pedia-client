@@ -9,7 +9,7 @@ const Premium = () => {
     const { data: premiums = [] } = useQuery({
         queryKey: ['premium'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/premium')
+            const res = await fetch('https://science-pedia-server.vercel.app/premium')
             const data = res.json()
             return data
         }

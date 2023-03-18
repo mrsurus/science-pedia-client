@@ -8,7 +8,7 @@ const AnswerCard = ({ data }) => {
     const {user,setHandleRefetch,handleRefetch} = useContext(AuthContext)
 
     const handleDelete = () => {
-        fetch(`http://localhost:5000/answers/${_id}`, {
+        fetch(`https://science-pedia-server.vercel.app/answers/${_id}`, {
             method: "DELETE"
         })
             .then(res => res.json())

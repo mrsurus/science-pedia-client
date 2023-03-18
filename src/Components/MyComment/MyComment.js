@@ -9,7 +9,7 @@ const MyComment = () => {
     const { data: mycomments = [],refetch } = useQuery({
         queryKey: ['mycomment'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/mycomment?email=${user?.email}`,{
+            const res = await fetch(`https://science-pedia-server.vercel.app/mycomment?email=${user?.email}`,{
                 headers:{
                     authorization: `bearer ${localStorage.getItem('accesstoken')}`
                 }

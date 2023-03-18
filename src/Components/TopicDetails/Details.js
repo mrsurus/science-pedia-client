@@ -12,7 +12,7 @@ const Details = ({ data }) => {
     const dispatch = useDispatch()
 
   useEffect(()=> {
-    fetch(`http://localhost:5000/topic/${_id}`)
+    fetch(`https://science-pedia-server.vercel.app/topic/${_id}`)
     .then(res => res.json())
     .then(res => dispatch(actionss.setprelike(res.likes)))
   },[_id,like,dispatch])
@@ -29,7 +29,7 @@ const Details = ({ data }) => {
         }
 
         console.log(likeInfo);
-        fetch(`http://localhost:5000/topic/likes/${_id}`, {
+        fetch(`https://science-pedia-server.vercel.app/topic/likes/${_id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
@@ -65,8 +65,8 @@ const Details = ({ data }) => {
             <div className=' justify-around flex mt-16'>
                 <p
                     onClick={handleClicked}
-                    className={`mr-24 mb-5 flex items-center border bg-white p-2 rounded-md ${like && 'text-red-500'} `} >{counter} loves<AiFillHeart className='ml-1 text-xl'></AiFillHeart><span></span></p>
-                <p className='ml-24 mb-5 flex items-center bg-white p-2 rounded-md'>{commentNum} comments<AiFillWechat className='ml-1 text-xl'></AiFillWechat></p>
+                    className={` mb-5 flex items-center border bg-white p-2 rounded-md ${like && 'text-red-500'} `} >{counter} loves<AiFillHeart className='ml-1 text-xl'></AiFillHeart><span></span></p>
+                <p className=' mb-5 flex items-center bg-white p-2 rounded-md'>{commentNum} comments<AiFillWechat className='ml-1 text-xl'></AiFillWechat></p>
             </div>
         </div>
     );

@@ -19,7 +19,7 @@ const CommentBox = ({tdata}) => {
             date: `${new Date().getDate()}/${new Date().getMonth()}/${new Date().getFullYear()}`
         }
          
-        fetch(`http://localhost:5000/comment`,{
+        fetch(`https://science-pedia-server.vercel.app/comment`,{
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

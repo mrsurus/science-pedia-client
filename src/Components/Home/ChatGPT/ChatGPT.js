@@ -9,7 +9,7 @@ const ChatGPT = () => {
     e.preventDefault()
 
     axios
-    .post('http://localhost:5000/chat', {prompt})
+    .post('https://science-pedia-server.vercel.app/chat', {prompt})
     .then((res)=>{
       setResponse(res.data);
     })

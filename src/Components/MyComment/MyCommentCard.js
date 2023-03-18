@@ -5,7 +5,7 @@ const MyCommentCard = ({mycomment,refetch}) => {
     const {topicName, comment, date,_id} = mycomment
 
     const handleDeleteComment =()=>{
-        fetch(`http://localhost:5000/mycomment/${_id}`, {
+        fetch(`https://science-pedia-server.vercel.app/mycomment/${_id}`, {
             method: "DELETE"
         })
         .then(res => res.json())

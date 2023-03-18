@@ -1,9 +1,11 @@
+import About from "../Components/About/About";
 import Blog from "../Components/Blog/Blog";
 import Home from "../Components/Home/Home/Home";
 import Login from "../Components/Login/Login";
 import MyComment from "../Components/MyComment/MyComment";
 import QuestionAnswer from "../Components/QuestionAnswer/QuestionAnswer";
 import Register from "../Components/Register/Register";
+import DispalyError from "../Components/Shared/DisplayError/DispalyError";
 import TopicDetails from "../Components/TopicDetails/TopicDetails";
 import PrivateRoute from "./PrivateRoute";
 
@@ -14,6 +16,7 @@ const router = createBrowserRouter([
     {
         path: '/',
         element: <Main></Main>,
+        errorElement: <DispalyError></DispalyError>,
         children: [
             {
                 path: '/',
@@ -32,9 +35,13 @@ const router = createBrowserRouter([
                 element: <Register></Register>
             },
             {
+                path: '/about',
+                element: <About></About>
+            },
+            {
                 path: '/details/:id',
                 element: <PrivateRoute> <TopicDetails></TopicDetails></PrivateRoute>,
-                loader: ({params}) => fetch(`http://localhost:5000/topic/${params.id}`)
+                loader: ({params}) => fetch(`https://science-pedia-server.vercel.app/topic/${params.id}`)
             },
             {
                 path: '/mycomment',

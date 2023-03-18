@@ -17,7 +17,7 @@ const PostQuestion = () => {
             img: user?.photoURL
         }
     
-        fetch('http://localhost:5000/questions', {
+        fetch('https://science-pedia-server.vercel.app/questions', {
             method:'POST',
             headers: {
                 'Content-type': 'application/json'

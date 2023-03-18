@@ -12,7 +12,7 @@ const Comments = ({ tdata}) => {
     const {data: comments=[], refetch} = useQuery({
         queryKey:['comments'],
         queryFn: async() => {
-            const res = await fetch(`http://localhost:5000/comment/${name}`)
+            const res = await fetch(`https://science-pedia-server.vercel.app/comment/${name}`)
             const data = res.json()
             return data
         }
