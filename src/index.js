@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import AuthProvider from './Context/AuthProvider';
 import {  QueryClient, QueryClientProvider, } from '@tanstack/react-query'
-import store from './redux/Store';
+import store from './Store/index';
 import { Provider } from 'react-redux';
 
 store.subscribe(()=> console.log(store.getState()))

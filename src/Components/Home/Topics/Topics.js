@@ -4,7 +4,7 @@ import TopicCard from './TopicCard';
 
 const Topics = () => {
 
-    const { data: topics = [] } = useQuery({
+    const { data:topics=[] } = useQuery({
         queryKey: ['topic'],
         queryFn: async () => {
             const res = await fetch('http://localhost:5000/topic')
@@ -12,8 +12,8 @@ const Topics = () => {
             return data
         }
     })
+    console.log(topics);
 
-    console.log(topics)
     return (
         <div className='p-12 bg-gray-900'>
             <div className='px-auto  my-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 '>

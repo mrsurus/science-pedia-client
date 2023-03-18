@@ -14,8 +14,6 @@ const Premium = () => {
             return data
         }
     })
-    console.log(premiums);
-    console.log(modalData);
     return (
         <div className='bg-gray-900 my-5 p-10'>
             <p className='text-2xl font-bold text-center my-5 text-white'>Be Our Premium User</p>

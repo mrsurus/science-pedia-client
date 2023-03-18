@@ -1,19 +1,55 @@
-import React, { useState } from 'react';
-import { set } from 'react-hook-form';
-import { AiFillLike, AiFillWechat } from 'react-icons/ai';
+// import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import { AiFillHeart, AiFillWechat } from 'react-icons/ai';
 import { useSelector, useDispatch } from 'react-redux';
-import { incLikes } from '../../redux/Actions';
-import { dicLikes } from '../../redux/Actions';
+import { actionss } from '../../Store/like-slice';
 
 const Details = ({ data }) => {
-    const { name, img, description } = data
-    const myState = useSelector((state)=>state.changeTheNumber)
+    const { name, img, description, likes, _id } = data
+    const like = useSelector((state) => state.like.like)
+    const counter = useSelector((state) => state.like.counter)
+    const commentNum = useSelector((state) => state.comment.comment)
     const dispatch = useDispatch()
-    const [like, setLike] = useState('')
 
-    const handleClicked =() =>{
-         dispatch(incLikes())
-        
+  useEffect(()=> {
+    fetch(`http://localhost:5000/topic/${_id}`)
+    .then(res => res.json())
+    .then(res => dispatch(actionss.setprelike(res.likes)))
+  },[_id,like,dispatch])
+
+
+    const handleClicked = () => {
+        dispatch(actionss.setLike())
+
+    }
+    
+    const handleLikeNumber = (num) => {
+        const likeInfo = {
+            counter: likes + num
+        }
+
+        console.log(likeInfo);
+        fetch(`http://localhost:5000/topic/likes/${_id}`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(likeInfo)
+        })
+            .then(response => response.json())
+            .then((data) => { })
+            .catch((error) => {
+                console.log(error);
+                
+            });
+    }
+
+    
+    if (like === true) {
+        handleLikeNumber(1)
+    }
+    else{
+        handleLikeNumber(0)
     }
     return (
         <div className='min-h-screen bg-violet-200'>
@@ -24,17 +60,14 @@ const Details = ({ data }) => {
                         <p className='text-3xl font-bold my-3'>{name}</p>
                         <p>{description}</p>
                     </div>
-                </div>              
+                </div>
             </div>
             <div className=' justify-around flex mt-16'>
-                    <p 
-                
-                    // onClick={()=> dispatch(incLikes())}
+                <p
                     onClick={handleClicked}
-                    onAnimationEnd={()=>dispatch(dicLikes())}
-                    className='mr-24 mb-5 flex items-center border bg-white p-2 rounded-md'>{myState}likes<AiFillLike className='ml-1 text-xl'></AiFillLike><span></span></p>
-                    <p className='ml-24 mb-5 flex items-center bg-white p-2 rounded-md'>Comments<AiFillWechat className='ml-1 text-xl'></AiFillWechat></p>
-                </div>
+                    className={`mr-24 mb-5 flex items-center border bg-white p-2 rounded-md ${like && 'text-red-500'} `} >{counter} loves<AiFillHeart className='ml-1 text-xl'></AiFillHeart><span></span></p>
+                <p className='ml-24 mb-5 flex items-center bg-white p-2 rounded-md'>{commentNum} comments<AiFillWechat className='ml-1 text-xl'></AiFillWechat></p>
+            </div>
         </div>
     );
 };
