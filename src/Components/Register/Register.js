@@ -11,6 +11,7 @@ const Register = () => {
     const { register, handleSubmit, formState: { errors }, } = useForm();
     const imageHostKey = process.env.REACT_APP_imgbb_Key
     const [createEmail, setCreateEmail] = useState('')
+    const [mainError, setMainError] = useState('')
     const [token] = useToken(createEmail)
     const { createUser, updateNamePhoto } = useContext(AuthContext)
     const location = useLocation()
@@ -21,7 +22,12 @@ const Register = () => {
         navigate(from, { replace: true })
     }
     
-    const onSubmit = (data) => {
+    const OnSubmit = (data) => {
+        setMainError('')
+        Swal.fire(
+            'Please wait',
+            'Your data is processing...'
+          )
         //upload img to imgbb
         const formData = new FormData();
         const image = data.image[0]
@@ -63,20 +69,23 @@ const Register = () => {
                                         })
                                             .then(res => res.json())
                                             .then(data => {
-                                                console.log(data)
-                                                setCreateEmail(email)
-                                                
                                                 Swal.fire(
                                                     'Good job!',
                                                     'successfully signed up!',
                                                     'success'
                                                   )
+                                                setCreateEmail(email)
+                                                
+                                                
                                             })
                                     })
                                     .catch(err => console.log(err))
 
                             })
-                            .catch(err => console.log(err))
+                            .catch(err =>{ 
+                                setMainError(err)
+                                console.log("eamil",err)
+                            })
                     } else {
                         return;
                     }
@@ -89,7 +98,7 @@ const Register = () => {
         <div className="flex flex-col items-center justify-center my-24">
             <form
                 className="flex flex-col bg-base-400 p-6 rounded-lg shadow-2xl"
-                onSubmit={handleSubmit(onSubmit)}
+                onSubmit={handleSubmit(OnSubmit)}
             >
                 <h2 className="text-2xl font-bold mb-4">Register</h2>
                 <label htmlFor="name" className="mb-2">
@@ -169,6 +178,9 @@ const Register = () => {
                         {errors.password.message}
                     </span>
                 )}
+                {
+                    mainError && <p className="text-red-500 mb-4"> {mainError.message.slice(9, 43)}</p>
+                }
                 <button
                     type="submit"
                     className="bg-green-500 text-white rounded-md px-4 py-2 font-medium hover:bg-green-600 transition duration-200"

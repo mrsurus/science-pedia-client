@@ -6,3 +6,5 @@
 3. Freely asking questions and take specific answer to any questions are also implemented.
 4. user can buy premium services and can  pay with strip.
 5. Author can delete any of his data and review.
+
+### live site: https://science-pedia.web.app/
